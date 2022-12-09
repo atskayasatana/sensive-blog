@@ -76,18 +76,6 @@ class Tag(models.Model):
         verbose_name = 'тег'
         verbose_name_plural = 'теги'
 
-    class PostQuerySet(models.QuerySet):
-        def popular_with_posts_count(self):
-            popular_tags = self.annotate(num_posts=Count('posts')).order_by('-num_posts')
-            tags=[]
-            for tag in popular_tags:
-                tag.posts_count = tag.num_posts
-                tags.append(tag)
-            return tags
-
-    objects = PostQuerySet.as_manager()
-
-
 class Comment(models.Model):
     post = models.ForeignKey(
         'Post',
