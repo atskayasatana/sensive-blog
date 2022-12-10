@@ -37,6 +37,13 @@ python3 manage.py runserver
 - `ALLOWED_HOSTS` — см [документацию Django](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts)
 
 
+## Описание блога
+
+На главной странице в ленте собраны самые популярные посты(сортировка по числу лайков):
+
+
+
+
 ## Цели проекта
 
 Код написан в учебных целях — для курса по Python и веб-разработке на сайте [Devman](https://dvmn.org).
