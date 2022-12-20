@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Count
-from django.db.models import Prefetch
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -40,16 +39,20 @@ class Post(models.Model):
 
     class PostQuerySet(models.QuerySet):
         def year(self, year):
-            posts_at_year = self.filter(published_at__year=year).order_by('published_at')
+            posts_at_year = self.filter(published_at__year=year)\
+                                .order_by('published_at')
             return posts_at_year
+
         def popular(self):
-            posts_sorted = self.annotate(num_likes=Count('likes')).order_by('-num_likes')
+            posts_sorted = self.annotate(num_likes=Count('likes'))\
+                               .order_by('-num_likes')
             return posts_sorted
+
         def fetch_with_comments_count(self):
             posts_with_comments = self.prefetch_related('comments')
             posts = []
             for post in posts_with_comments:
-                post.comments_count=post.comments.count()
+                post.comments_count = post.comments.count()
                 posts.append(post)
             return posts
 
@@ -73,7 +76,9 @@ class Tag(models.Model):
         verbose_name = 'тег'
         verbose_name_plural = 'теги'
 
+
 class Comment(models.Model):
+
     post = models.ForeignKey(
         'Post',
         on_delete=models.CASCADE,
@@ -99,22 +104,19 @@ class Comment(models.Model):
 
 class PostQuerySet(models.QuerySet):
     def year(self, year):
-        posts_at_year = self.filter(published_at__year=year).order_by('published_at')
+        posts_at_year = self.filter(published_at__year=year)\
+                            .order_by('published_at')
         return posts_at_year
+
     def popular(self):
-        posts_sorted = self.annotate(num_likes=Count('likes')).order_by('-num_likes')
+        posts_sorted = self.annotate(num_likes=Count('likes'))\
+                           .order_by('-num_likes')
         return posts_sorted
+
     def fetch_with_comments_count(self):
         posts_with_comments = self.prefetch_related('comments')
         posts = []
         for post in posts_with_comments:
-            post.comments_count=post.comments.count()
+            post.comments_count = post.comments.count()
             posts.append(post)
         return posts
-
-
-
-
-
-
-
