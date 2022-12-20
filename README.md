@@ -37,6 +37,30 @@ python3 manage.py runserver
 - `ALLOWED_HOSTS` — см [документацию Django](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts)
 
 
+## Описание блога
+
+На главной странице в ленте собраны самые популярные посты(сортировка по числу лайков):
+![Самые популярные](screenshots/most_popular_posts.png)
+Ниже на странице можно найти самые свежие посты:
+![Самые свежие](https://github.com/atskayasatana/sensive-blog/blob/f478efc050287feef76e209f054b909985d8537d/screenshots/the%20freshest%20posts.png)
+ 
+ Также есть возможность фильтрации постов по тегам:
+ ![Теги](https://github.com/atskayasatana/sensive-blog/blob/f478efc050287feef76e209f054b909985d8537d/screenshots/tags.png)
+ 
+ Управление блогом осуществляется через админку сайта.
+ 
+ Создаем суперпользователя:
+ ```
+ python manage.py createsuperuser 
+ ```
+ ![Суперпользователь](https://github.com/atskayasatana/sensive-blog/blob/4584fca93c4363b134ea7a3e4c4ccb0ffb036215/screenshots/superuser_create.png)
+
+Заходим на http://127.0.0.1:8000/admin/ с созданным логином и паролем.
+![Админка](https://github.com/atskayasatana/sensive-blog/blob/4584fca93c4363b134ea7a3e4c4ccb0ffb036215/screenshots/admin_main.png)
+
+В соответсвующих разделах можно вносить изменения.
+
+
 ## Цели проекта
 
 Код написан в учебных целях — для курса по Python и веб-разработке на сайте [Devman](https://dvmn.org).
