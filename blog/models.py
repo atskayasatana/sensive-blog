@@ -109,9 +109,9 @@ class PostQuerySet(models.QuerySet):
         return posts_at_year
 
     def popular(self):
-        posts_sorted = self.annotate(num_likes=Count('likes'))\
-                           .order_by('-num_likes')
-        return posts_sorted
+        popular_posts = self.annotate(num_likes=Count('likes'))\
+                            .order_by('-num_likes')
+        return popular_posts
 
     def fetch_with_comments_count(self):
         posts_with_comments = self.prefetch_related('comments')
