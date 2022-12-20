@@ -139,18 +139,15 @@ def tag_filter(request, tag_title):
 
     most_popular_tags = tags[:5]
 
-    most_popular_posts = all_posts.popular()\
-                                  .prefetch_related(
-                                   Prefetch('author',
-                                            to_attr='author_name'))[:5]\
+    most_popular_posts = all_posts.popular()[:5]\
                                   .fetch_with_comments_count()
 
-    related_posts = tag.posts.all()\
+    related_posts = tag.posts.all()[:20]\
                        .prefetch_related(prefetch)\
                        .prefetch_related(
                         Prefetch('author',
                                  to_attr='author_name'))\
-                       .fetch_with_comments_count()[:20]
+                       .fetch_with_comments_count()
 
     context = {
         'tag': tag.title,
