@@ -4,6 +4,26 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 
+class PostQuerySet(models.QuerySet):
+    def year(self, year):
+        posts_at_year = self.filter(published_at__year=year)\
+                            .order_by('published_at')
+        return posts_at_year
+
+    def popular(self):
+        popular_posts = self.annotate(num_likes=Count('likes'))\
+                            .order_by('-num_likes')
+        return popular_posts
+
+    def fetch_with_comments_count(self):
+        posts_with_comments = self.prefetch_related('comments')
+        posts = []
+        for post in posts_with_comments:
+            post.comments_count = post.comments.count()
+            posts.append(post)
+        return posts
+
+
 class Post(models.Model):
     title = models.CharField('Заголовок', max_length=200)
     text = models.TextField('Текст')
@@ -82,22 +102,3 @@ class Comment(models.Model):
         verbose_name = 'комментарий'
         verbose_name_plural = 'комментарии'
 
-
-class PostQuerySet(models.QuerySet):
-    def year(self, year):
-        posts_at_year = self.filter(published_at__year=year)\
-                            .order_by('published_at')
-        return posts_at_year
-
-    def popular(self):
-        popular_posts = self.annotate(num_likes=Count('likes'))\
-                            .order_by('-num_likes')
-        return popular_posts
-
-    def fetch_with_comments_count(self):
-        posts_with_comments = self.prefetch_related('comments')
-        posts = []
-        for post in posts_with_comments:
-            post.comments_count = post.comments.count()
-            posts.append(post)
-        return posts
