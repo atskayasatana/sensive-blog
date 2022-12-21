@@ -1,5 +1,6 @@
 from django.db.models import Count
 from django.db.models import Prefetch
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from blog.models import Comment, Post, Tag
 
@@ -135,7 +136,7 @@ def tag_filter(request, tag_title):
                              Prefetch('author',
                                       to_attr='author_name'))
 
-    tag = tags.get(title=tag_title)
+    tag = get_object_or_404(tags, title=tag_title)
 
     most_popular_tags = tags[:5]
 
